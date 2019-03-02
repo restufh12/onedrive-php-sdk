@@ -12,9 +12,10 @@ use Microsoft\Graph\Http\GraphRequest;
 use Microsoft\Graph\Http\GraphResponse;
 use Microsoft\Graph\Model\Drive;
 use Microsoft\Graph\Model\DriveItem;
+use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
 
-class ClientTest extends \PHPUnit_Framework_TestCase
+class ClientTest extends TestCase
 {
     const CLIENT_ID     = '01234567-89ab-cdef-0123-456789abcdef';
     const CLIENT_SECRET = 'SeCrEt';
@@ -26,11 +27,9 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     const DRIVE_ID      = '0000000000000004';
     const DRIVE_ITEM_ID = '0123';
 
-    /**
-     * @expectedException \Exception
-     */
     public function testConstructorWithNullGraphShouldThrowException()
     {
+        $this->expectException(\Exception::class);
         $graph      = $this->mockGraph();
         $httpClient = $this->createMock(ClientInterface::class);
         new Client(null, $graph, $httpClient, []);
@@ -266,7 +265,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         $httpClient = $this->createMock(ClientInterface::class);
         $sut        = new Client(self::CLIENT_ID, $graph, $httpClient, []);
         $actual     = $sut->getDrives();
-        $this->assertInternalType('array', $actual);
+        $this->assertIsArray($actual);
         $this->assertCount(1, $actual);
 
         foreach ($actual as $drive) {

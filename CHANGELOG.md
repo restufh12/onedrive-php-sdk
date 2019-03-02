@@ -4,6 +4,10 @@ Change log
 [Unreleased][unreleased]
 ------------------------
 
+### Changed
+
+- Upgraded to PHPUnit 8.
+
 ### Removed
 
 - Support for PHP 5.6, PHP 7.0, and PHP 7.1.

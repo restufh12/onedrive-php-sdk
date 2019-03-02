@@ -55,8 +55,9 @@ use Microsoft\Graph\Model\Thumbnail;
 use Microsoft\Graph\Model\UploadSession;
 use Microsoft\Graph\Model\Video;
 use Microsoft\Graph\Model\Workbook;
+use PHPUnit\Framework\TestCase;
 
-class DriveItemProxyTest extends \PHPUnit_Framework_TestCase
+class DriveItemProxyTest extends TestCase
 {
     const DRIVE_ITEM_ID     = '0123';
     const UPLOAD_SESSION_ID = '4567';
@@ -82,7 +83,7 @@ class DriveItemProxyTest extends \PHPUnit_Framework_TestCase
         $driveItem = $this->createMock(DriveItem::class);
         $driveItem->method('getCTag')->willReturn('1234');
         $sut = new DriveItemProxy($graph, $driveItem);
-        $this->assertInternalType('string', $sut->cTag);
+        $this->assertIsString($sut->cTag);
         $this->assertSame('1234', $sut->cTag);
     }
 
@@ -232,7 +233,7 @@ class DriveItemProxyTest extends \PHPUnit_Framework_TestCase
         $driveItem = $this->createMock(DriveItem::class);
         $driveItem->method('getSize')->willReturn(1234);
         $sut = new DriveItemProxy($graph, $driveItem);
-        $this->assertInternalType('int', $sut->size);
+        $this->assertIsInt($sut->size);
         $this->assertSame(1234, $sut->size);
     }
 
@@ -262,7 +263,7 @@ class DriveItemProxyTest extends \PHPUnit_Framework_TestCase
         $driveItem = $this->createMock(DriveItem::class);
         $driveItem->method('getWebDavUrl')->willReturn('http://webd.av/url');
         $sut = new DriveItemProxy($graph, $driveItem);
-        $this->assertInternalType('string', $sut->webDavUrl);
+        $this->assertIsString($sut->webDavUrl);
         $this->assertSame('http://webd.av/url', $sut->webDavUrl);
     }
 
@@ -294,7 +295,7 @@ class DriveItemProxyTest extends \PHPUnit_Framework_TestCase
         $driveItem->method('getPermissions')->willReturn($permissions);
         $sut    = new DriveItemProxy($graph, $driveItem);
         $actual = $sut->permissions;
-        $this->assertInternalType('array', $actual);
+        $this->assertIsArray($actual);
         $this->assertCount(2, $actual);
 
         foreach ($actual as $permission) {
@@ -315,7 +316,7 @@ class DriveItemProxyTest extends \PHPUnit_Framework_TestCase
         $driveItem->method('getThumbnails')->willReturn($thumbnails);
         $sut    = new DriveItemProxy($graph, $driveItem);
         $actual = $sut->thumbnails;
-        $this->assertInternalType('array', $actual);
+        $this->assertIsArray($actual);
         $this->assertCount(2, $actual);
 
         foreach ($actual as $thumbnail) {
@@ -336,7 +337,7 @@ class DriveItemProxyTest extends \PHPUnit_Framework_TestCase
         $driveItem->method('getVersions')->willReturn($driveItemVersions);
         $sut    = new DriveItemProxy($graph, $driveItem);
         $actual = $sut->versions;
-        $this->assertInternalType('array', $actual);
+        $this->assertIsArray($actual);
         $this->assertCount(2, $actual);
 
         foreach ($actual as $driveItemVersion) {
@@ -376,7 +377,7 @@ class DriveItemProxyTest extends \PHPUnit_Framework_TestCase
         $graph  = $this->mockGraphWithCollectionResponse($childItems);
         $sut    = new DriveItemProxy($graph, $item);
         $actual = $sut->getChildren();
-        $this->assertInternalType('array', $actual);
+        $this->assertIsArray($actual);
         $this->assertCount(2, $actual);
 
         foreach ($actual as $child) {
@@ -449,7 +450,7 @@ class DriveItemProxyTest extends \PHPUnit_Framework_TestCase
         $graph           = $this->mockGraphWithResponse(202, ['headers' => ['Location' => ['http://progre.ss/url']]]);
         $sut             = new DriveItemProxy($graph, $item);
         $actual          = $sut->copy($destinationItem, []);
-        $this->assertInternalType('string', $actual);
+        $this->assertIsString($actual);
         $this->assertSame('http://progre.ss/url', $actual);
     }
 

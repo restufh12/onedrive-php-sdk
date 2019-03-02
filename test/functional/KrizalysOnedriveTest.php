@@ -42,12 +42,13 @@ use Krizalys\Onedrive\Proxy\UserProxy;
 use Krizalys\Onedrive\Proxy\VideoProxy;
 use Krizalys\Onedrive\Proxy\WorkbookProxy;
 use Microsoft\Graph\Graph;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Process\Process;
 
 /**
  * @group functional
  */
-class KrizalysOnedriveTest extends \PHPUnit_Framework_TestCase
+class KrizalysOnedriveTest extends TestCase
 {
     const REDIRECT_URI_PORT = 7777;
 
@@ -67,7 +68,7 @@ EOF;
 
     private static $clientSecret;
 
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass(): void
     {
         parent::setUpBeforeClass();
         $config = sprintf('%s/config.php', __DIR__);
@@ -193,7 +194,7 @@ EOF;
     public function testGetShared()
     {
         $items = self::$client->getShared();
-        $this->assertInternalType('array', $items);
+        $this->assertIsArray($items);
 
         foreach ($items as $item) {
             $this->assertDriveItemProxy($item);
@@ -203,7 +204,7 @@ EOF;
     public function testGetRecent()
     {
         $items = self::$client->getRecent();
-        $this->assertInternalType('array', $items);
+        $this->assertIsArray($items);
 
         foreach ($items as $item) {
             $this->assertDriveItemProxy($item);
@@ -218,7 +219,7 @@ EOF;
     private function assertSpecialFolderProxy($specialFolder)
     {
         $this->assertInstanceOf(SpecialFolderProxy::class, $specialFolder);
-        $this->assertInternalType('string', $specialFolder->name);
+        $this->assertIsString($specialFolder->name);
     }
 
     public function testCreateFolder()
@@ -447,7 +448,7 @@ EOF;
     private function assertEntityProxy($entity)
     {
         $this->assertInstanceOf(EntityProxy::class, $entity);
-        $this->assertInternalType('string', $entity->id);
+        $this->assertIsString($entity->id);
     }
 
     private function assertBaseItemProxy($baseItem)
@@ -805,7 +806,7 @@ EOF;
 
         if ($item->versions !== null) {
             foreach ($item->versions as $version) {
-                $this->assertInternalType('string', $version);
+                $this->assertIsString($version);
             }
         }
 

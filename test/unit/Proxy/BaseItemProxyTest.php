@@ -12,8 +12,9 @@ use Microsoft\Graph\Model\Identity;
 use Microsoft\Graph\Model\IdentitySet;
 use Microsoft\Graph\Model\ItemReference;
 use Microsoft\Graph\Model\User;
+use PHPUnit\Framework\TestCase;
 
-class BaseItemProxyTest extends \PHPUnit_Framework_TestCase
+class BaseItemProxyTest extends TestCase
 {
     public function testCreatedByShouldReturnExpectedValue()
     {
@@ -45,7 +46,7 @@ class BaseItemProxyTest extends \PHPUnit_Framework_TestCase
         $baseItem = $this->createMock(BaseItem::class);
         $baseItem->method('getDescription')->willReturn('Description');
         $sut = new BaseItemProxy($graph, $baseItem);
-        $this->assertInternalType('string', $sut->description);
+        $this->assertIsString($sut->description);
         $this->assertSame('Description', $sut->description);
     }
 
@@ -55,7 +56,7 @@ class BaseItemProxyTest extends \PHPUnit_Framework_TestCase
         $baseItem = $this->createMock(BaseItem::class);
         $baseItem->method('getETag')->willReturn('1234');
         $sut = new BaseItemProxy($graph, $baseItem);
-        $this->assertInternalType('string', $sut->eTag);
+        $this->assertIsString($sut->eTag);
         $this->assertSame('1234', $sut->eTag);
     }
 
@@ -89,7 +90,7 @@ class BaseItemProxyTest extends \PHPUnit_Framework_TestCase
         $baseItem = $this->createMock(BaseItem::class);
         $baseItem->method('getName')->willReturn('Name');
         $sut = new BaseItemProxy($graph, $baseItem);
-        $this->assertInternalType('string', $sut->name);
+        $this->assertIsString($sut->name);
         $this->assertSame('Name', $sut->name);
     }
 
@@ -111,7 +112,7 @@ class BaseItemProxyTest extends \PHPUnit_Framework_TestCase
         $baseItem = $this->createMock(BaseItem::class);
         $baseItem->method('getWebUrl')->willReturn('http://w.eb/url');
         $sut = new BaseItemProxy($graph, $baseItem);
-        $this->assertInternalType('string', $sut->webUrl);
+        $this->assertIsString($sut->webUrl);
         $this->assertSame('http://w.eb/url', $sut->webUrl);
     }
 
